@@ -1,8 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { RequestService } from './request.service';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+	private readonly logger = new Logger(AppService.name);
+
+	constructor(private readonly requestService: RequestService) {}
+
+	getHello(): string {
+		const userId = this.requestService.getUserId();
+		this.logger.log('get user id:', userId);
+
+		return 'Hello World!';
+	}
 }
