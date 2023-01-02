@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Get,
+	Post,
+	UseFilters,
+	UseGuards,
+} from '@nestjs/common';
 
 import { AppService } from './app.service';
 import any = jasmine.any;
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { FreezePipe } from './pipes/freeze.pipe';
 
 @Controller()
@@ -16,6 +24,7 @@ export class AppController {
 	@Post()
 	// Как вариант
 	@UseGuards(FreezePipe)
+	@UseFilters(HttpExceptionFilter)
 	examplePost(@Body(new FreezePipe()) body: any) {
 		body.test = 1;
 	}
